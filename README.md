@@ -8,7 +8,7 @@
 
 Analyse de la forme, de l'hypsométrie et des pentes du bassin versant
 de la Têt (Pyrénées-Orientales), sur le troncon dont l'exutoire est situé à Serdinya. Projet réalisé avec R (terra, sf, whitebox).
-
+Conception de la chaîne de traitement et analyse des résultats par Gaël Letourneur, scripts écrits avec l'IA Claude Code.
 ## Données utilisées
 
 - **RGE ALTI 1 m, département 66** (IGN, Licence Ouverte Etalab 2.0) :
@@ -38,9 +38,9 @@ L'exutoire, placé manuellement, est fourni dans `data/digitalisation/`.
 
 ### Délimitation du bassin
 
-Le bassin est délimité à partir du RGE ALTI agrégé à 5 m, après correction
+Le bassin est délimité à partir du RGE ALTI (1m agrégé à 5 m), après correction
 des cuvettes, avec l'algorithme d'écoulement D8. L'exutoire est placé à la station hydrométrique
-**Y0424010 (La Têt à Serdinya [Joncet])**, puis accroché au chenal simulé.
+**Y0424010 (La Têt à Serdinya [Joncet])** (disponible sur HydroPortail), puis accroché au chenal simulé.
 
 | Contrôle | Résultat |
 |---|---|
@@ -51,7 +51,7 @@ des cuvettes, avec l'algorithme d'écoulement D8. L'exutoire est placé à la st
 
 Le bassin calculé suit les limites de la BD TOPAGE le long des crêtes,
 y compris dans le couloir étroit de la haute Têt, entre le Capcir (Aude)
-et la Cerdagne (Sègre). Les écarts correspondent à la partie aval de la
+et la Cerdagne (El Segre). Les écarts correspondent à la partie aval de la
 zone BD TOPAGE de Serdinya, située après l'exutoire, et à un petit secteur
 au sud-ouest du lobe des sources (replat probable vers Mont-Louis).
 

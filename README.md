@@ -85,6 +85,39 @@ d'altitude de 100 m. C : distribution des pentes.*
 | 30–45° | 33,3 % |
 | > 45° | 4,3 % |
 
+### Carte du bassin
+
+![Carte du bassin de la Têt](figures/carte_bassin_tet.png)
+
+Le réseau hydrographique est extrait de l'accumulation des écoulements,
+avec un seuil de 0,5 km² drainés, puis hiérarchisé selon l'ordre de
+Strahler. La Têt atteint l'ordre 5 à l'exutoire.
+
+### Profil en long de la Têt
+
+![Profil en long de la Têt](figures/profil_long_tet.png)
+
+*A : profil en long, avec une exagération verticale de 10. Les bandes
+rappellent les étages de pente des versants. B : pente du lit, calculée
+sur des tronçons de 500 m.*
+
+Le profil suit le plus long chemin d'écoulement, à partir de la tête du
+chenal (0,5 km² drainés), avec les altitudes du MNT d'origine.
+
+- **L'amont est en escalier.** Deux longs paliers, vers 2 000 m et vers
+  1 700 m, alternent avec des ressauts. Le premier palier correspond en
+  partie à la surface du lac des Bouillouses. Les deux paliers se situent
+  dans l'étage des replats mis en évidence par la morphométrie.
+- **Une rupture de pente nette marque l'entrée dans les gorges**, à la
+  sortie de l'étage des replats : la pente du lit y remonte à environ 15 %.
+- **L'aval est concave et régulier**, avec une pente qui décroît jusqu'à
+  2-3 % à l'exutoire.
+
+Cette succession de paliers et de ressauts évoque le profil d'une vallée
+façonnée par les glaciers (ombilics et verrous), alors que la partie aval
+présente un profil de type fluvial. Cette hypothèse reste à confirmer par
+la cartographie des formes glaciaires et la littérature régionale.
+
 ### Interprétation
 
 - **Un bassin très allongé.** Le coefficient de Gravelius (2,0) et le
@@ -112,6 +145,12 @@ d'altitude de 100 m. C : distribution des pentes.*
 - Le rapport de Melton (0,12) est calculé, mais il n'est pas interprété :
   ses seuils ont été établis pour de petits bassins torrentiels, et ne
   s'appliquent pas à un bassin de 415 km².
+  - Le réseau et l'ordre de Strahler dépendent du seuil d'accumulation
+  (0,5 km²) : un seuil plus bas densifie le réseau et peut augmenter
+  l'ordre maximal.
+- Les surfaces de lac apparaissent comme des paliers parfaitement plats
+  sur le profil en long : la pente nulle y traduit le plan d'eau, et non
+  la pente du fond.
 
 ## Packages
 

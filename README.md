@@ -40,7 +40,7 @@ L'exutoire, placé manuellement, est fourni dans `data/digitalisation/`.
 
 Le bassin est délimité à partir du RGE ALTI (1m agrégé à 5 m), après correction
 des cuvettes, avec l'algorithme d'écoulement D8. L'exutoire est placé à la station hydrométrique
-**Y0424010 (La Têt à Serdinya [Joncet])** (disponible sur HydroPortail), puis accroché au chenal simulé.
+**Y0424010 (La Têt à Serdinya [Joncet])**, disponible sur HydroPortail), puis accroché au chenal simulé.
 
 | Contrôle | Résultat |
 |---|---|

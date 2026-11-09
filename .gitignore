@@ -1,0 +1,14 @@
+# RStudio
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+
+# Données téléchargées (volumineuses et retéléchargeables)
+data/raw/
+data/reference/
+*.7z*
+
+# Rasters produits par les scripts
+data/derived/*.tif
+data/derived/*.vrt

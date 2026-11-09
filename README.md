@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-# Analyse hydrologique réalisée dans le cadre du cours "Hydrosystème de Montagne" du M1 GAED, parcours GEOÏDES
+# Analyse hydrologique réalisée dans le cadre du cours "Hydrosystèmes de Montagne" du M1 GAED, parcours GEOÏDES
 
 Analyse de la forme, de l'hypsométrie et des pentes du bassin versant
 de la Têt (Pyrénées-Orientales), sur le troncon dont l'exutoire est situé à Serdinya. Projet réalisé avec R (terra, sf, whitebox).

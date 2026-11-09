@@ -12,3 +12,14 @@ data/reference/
 # Rasters produits par les scripts
 data/derived/*.tif
 data/derived/*.vrt
+
+# Shapefiles intermédiaires pour WhiteboxTools
+data/derived/*.shp
+data/derived/*.shx
+data/derived/*.dbf
+data/derived/*.prj
+data/derived/*.cpg
+
+# Fichiers temporaires de QGIS
+*.gpkg-wal
+*.gpkg-shm

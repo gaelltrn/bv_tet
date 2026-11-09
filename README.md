@@ -85,6 +85,23 @@ d'altitude de 100 m. C : distribution des pentes.*
 | 30–45° | 33,3 % |
 | > 45° | 4,3 % |
 
+### Interprétation
+
+- **Un bassin très allongé.** Le coefficient de Gravelius (2,0) et le
+  rapport d'allongement (0,40) traduisent la forme du bassin : un grand
+  lobe compact, prolongé par le long couloir de la haute Têt jusqu'au
+  secteur des sources.
+- **Trois étages de relief.** Les pentes sont fortes entre 1 000 et
+  1 400 m (gorges de la Têt), douces entre 1 600 et 2 300 m (replats
+  de la haute vallée), puis de nouveau
+  fortes au-dessus de 2 500 m (parois et crêtes). La bande des replats
+  concentre une grande part de la surface, ce qui explique la forme
+  en S de la courbe hypsométrique.
+- **Un bassin raide.** Plus d'un tiers de la surface (37,6 %) dépasse
+  30°. La distribution des pentes chute nettement au-delà de 37°,
+  ce qui évoque des pentes seuils, au-delà desquelles les versants
+  meubles deviennent instables.
+
 ### Carte du bassin
 
 ![Carte du bassin de la Têt](figures/carte_bassin_tet.png)
@@ -118,22 +135,6 @@ façonnée par les glaciers (ombilics et verrous), alors que la partie aval
 présente un profil de type fluvial. Cette hypothèse reste à confirmer par
 la cartographie des formes glaciaires et la littérature régionale.
 
-### Interprétation
-
-- **Un bassin très allongé.** Le coefficient de Gravelius (2,0) et le
-  rapport d'allongement (0,40) traduisent la forme du bassin : un grand
-  lobe compact, prolongé par le long couloir de la haute Têt jusqu'au
-  secteur des sources.
-- **Trois étages de relief.** Les pentes sont fortes entre 1 000 et
-  1 400 m (gorges de la Têt), douces entre 1 600 et 2 300 m (replats
-  de la haute vallée), puis de nouveau
-  fortes au-dessus de 2 500 m (parois et crêtes). La bande des replats
-  concentre une grande part de la surface, ce qui explique la forme
-  en S de la courbe hypsométrique.
-- **Un bassin raide.** Plus d'un tiers de la surface (37,6 %) dépasse
-  30°. La distribution des pentes chute nettement au-delà de 37°,
-  ce qui évoque des pentes seuils, au-delà desquelles les versants
-  meubles deviennent instables.
 
 ### Limites
 

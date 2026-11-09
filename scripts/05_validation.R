@@ -4,9 +4,9 @@
 # - surface calculée : 416 km² pour 424 km² à la station Y0424010 (écart d'environ -2 %)
 # - accrochage de l'exutoire : 27 m
 # - très bon accord avec l'enveloppe BD TOPAGE, sauf :
-#   * au nord-est : la partie aval de la zone de Serdinya, après l'exutoire (attendu)
+#   * au nord-est : la partie aval de la zone de Serdinya, après l'exutoire 
 #   * au sud-ouest du lobe des sources : petit secteur exclu, replat probable
-#     vers Mont-Louis (incertitude à mentionner)
+#     vers Mont-Louis 
 
 library(sf)
 library(ggplot2)
@@ -18,7 +18,7 @@ exutoire <- st_read("data/derived/exutoire.shp", quiet = TRUE)
 snap     <- st_read("data/derived/exutoire_snap.shp", quiet = TRUE)
 
 # 1. Surface : comparaison avec la station hydrométrique
-surf_ref <- 424   # km², fiche HydroPortail de la station Y0424010 (à confirmer)
+surf_ref <- 424   # km², fiche HydroPortail de la station Y0424010 
 surf_bv  <- as.numeric(st_area(bv_tet)) / 1e6
 ecart    <- (surf_bv - surf_ref) / surf_ref * 100
 

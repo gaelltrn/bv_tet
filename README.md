@@ -30,9 +30,11 @@ L'exutoire, placé manuellement, est fourni dans `data/digitalisation/`.
 
 05_validation.R        comparaison avec la BD TOPO et la BD TOPAGE
 
-06_morphometrie.R      forme, hypsométrie, pentes
+06_morphometrie.R       forme, hypsométrie, pentes
 
-07_cartes.R            figures et cartes
+07_profil_long.R        tracage d'un profil en long.
+
+08_carte.R        réalisation d'une carte de synthèse et d'un ordre de Strahler 
 
 ## Résultats
 

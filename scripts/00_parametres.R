@@ -16,3 +16,9 @@ seuil_km2 <- seuil_px * taille_px^2 / 1e6
 
 # Version texte du seuil, avec virgule décimale, pour les légendes de figures
 seuil_txt <- format(seuil_km2, decimal.mark = ",")
+
+# Seuil pour extraire les lignes de crête sur le MNT inversé (en pixels).
+# Choix VISUEL, non calé : on part du seuil du réseau, puis on ne garde que
+# les crêtes d'ordre de Strahler ≥ 2 pour alléger la carte.
+seuil_crete_px <- seuil_px
+ordre_crete_min <- 2

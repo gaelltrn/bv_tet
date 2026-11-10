@@ -124,6 +124,20 @@ BD TOPAGE, en excluant les écoulements artificiels. La densité du réseau
 simulé (0,87 km/km²) s'écarte de 2,7 % de celle de la référence
 (0,85 km/km²). 
 
+**Lignes de crête.** Les lignes de crête sont extraites par inversion du
+MNT : les altitudes sont multipliées par −1, si bien que les crêtes
+deviennent des talwegs et les sommets des cuvettes. Le relief inversé est
+ensuite traité exactement comme le relief réel pour le réseau
+hydrographique : correction des cuvettes par brèches, direction
+d'écoulement D8, accumulation, puis extraction avec le même seuil
+(0,75 km²). Le « réseau hydrographique » du relief inversé dessine ainsi
+les lignes de crête du relief réel, hiérarchisées selon l'ordre de
+Strahler. Seules les crêtes d'ordre 2 ou plus sont représentées, pour la
+lisibilité de la carte.
+
+Les crêtes extraites se raccordent au contour du bassin, qui est lui-même
+la ligne de crête principale : la ligne de partage des eaux.
+
 ![Calage du seuil](figures/calage_seuil.png)
 
 Pour un seuil compris 0,625 et 1 km², la densité reste à
@@ -174,6 +188,10 @@ L'aval de la Têt est en effet à fort enjeu, du fait de la présence de Perpign
   la BD TOPAGE, qui omet souvent les ravines éphémères de tête. Les têtes
   de chenal réelles peuvent se situer plus haut, et le réseau réel être
   plus dense. L'ordre de Strahler maximal dépend directement de ce seuil.
+  - La méthode identifie les crêtes au sens topographique (lignes le long
+  desquelles le terrain descend des deux côtés). Elle ne distingue pas les
+  arêtes rocheuses vives des croupes arrondies. Sur les replats, où le
+  terrain est presque plat, la position des crêtes est moins bien définie.
 
 ## Packages
 

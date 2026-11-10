@@ -27,7 +27,7 @@ ombrage <- shade(terrain(mnt_z, "slope",  unit = "radians"),
 alt_bv <- mask(mnt_z, vect(bv))
 
 
-# 2. Réseau hydrographique simulé, ordonné selon Strahler -----------------
+# 2a. Réseau hydrographique simulé, ordonné selon Strahler -----------------
 
 wbt_extract_streams(
   flow_accum = "data/derived/accumulation.tif",
@@ -51,6 +51,47 @@ reseau <- st_intersection(reseau, st_geometry(bv))   # réseau du bassin seuleme
 # Ordre de Strahler maximal, à reporter dans le README
 max(reseau$STRM_VAL)
 
+# 2b. Lignes de crête : réseau d'écoulement du MNT inversé ----------------
+# Sur le MNT multiplié par -1, les crêtes deviennent des talwegs : le réseau
+# « hydrographique » du relief inversé dessine les lignes de crête.
+
+writeRaster(-mnt_z, "data/derived/mnt_inverse.tif", overwrite = TRUE)
+
+wbt_breach_depressions(
+  dem       = "data/derived/mnt_inverse.tif",
+  output    = "data/derived/mnt_inverse_breach.tif",
+  fill_pits = TRUE
+)
+wbt_d8_pointer(
+  dem    = "data/derived/mnt_inverse_breach.tif",
+  output = "data/derived/cretes_d8.tif"
+)
+wbt_d8_flow_accumulation(
+  input    = "data/derived/mnt_inverse_breach.tif",
+  output   = "data/derived/cretes_acc.tif",
+  out_type = "cells"
+)
+wbt_extract_streams(
+  flow_accum = "data/derived/cretes_acc.tif",
+  output     = "data/derived/cretes.tif",
+  threshold  = seuil_crete_px
+)
+wbt_strahler_stream_order(
+  d8_pntr = "data/derived/cretes_d8.tif",
+  streams = "data/derived/cretes.tif",
+  output  = "data/derived/cretes_ordre.tif"
+)
+wbt_raster_streams_to_vector(
+  streams = "data/derived/cretes_ordre.tif",
+  d8_pntr = "data/derived/cretes_d8.tif",
+  output  = "data/derived/cretes.shp"
+)
+
+cretes <- st_read("data/derived/cretes.shp", quiet = TRUE)
+if (is.na(st_crs(cretes))) st_crs(cretes) <- 2154
+cretes <- st_intersection(cretes, st_geometry(bv))
+cretes <- cretes[cretes$STRM_VAL >= ordre_crete_min, ]   # crêtes principales seulement
+
 
 # 3. Carte ----------------------------------------------------------------
 
@@ -63,6 +104,7 @@ carte <- ggplot() +
   geom_sf(data = bv, fill = NA, colour = "black", linewidth = 0.6) +
   geom_sf(data = reseau, aes(linewidth = STRM_VAL), colour = "#1f4e79",
           key_glyph = "path") +
+  geom_sf(data = cretes, colour = "#5a3a1a", linewidth = 0.4) +
   scale_linewidth(range = c(0.15, 1.2), name = "Ordre de\nStrahler") +
   geom_sf(data = exutoire, shape = 21, fill = "red", colour = "black", size = 3) +
   annotation_scale(location = "bl") +
@@ -72,7 +114,9 @@ carte <- ggplot() +
   labs(x = NULL, y = NULL,
        title = "Bassin de la Têt à la station de Serdinya",
        caption = paste0("Source : RGE ALTI 5 m (IGN). Réseau simulé (D8, seuil ", seuil_txt,
-                        " km², calé sur la BD TOPAGE).\nPoint rouge : station Y0424010.")) +
+                        " km², calé sur la BD TOPAGE).\n",
+                        "Traits bruns : lignes de crête principales (MNT inversé). ",
+                        "Point rouge : station Y0424010.")) +
   theme_minimal(base_size = 11) +
   theme(plot.title = element_text(face = "bold"),
         plot.caption = element_text(colour = "grey40", hjust = 0))

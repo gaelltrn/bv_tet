@@ -4,7 +4,7 @@
 .RData
 .Ruserdata
 
-# Données téléchargées (volumineuses et retéléchargeables)
+# Données téléchargées 
 data/raw/
 data/reference/
 *.7z*
@@ -13,13 +13,13 @@ data/reference/
 data/derived/*.tif
 data/derived/*.vrt
 
-# Shapefiles intermédiaires pour WhiteboxTools
+# Couches intermédiaires WhiteboxTools
 data/derived/*.shp
 data/derived/*.shx
 data/derived/*.dbf
 data/derived/*.prj
 data/derived/*.cpg
 
-# Fichiers temporaires de QGIS
+# Fichiers temporaires QGIS
 *.gpkg-wal
 *.gpkg-shm

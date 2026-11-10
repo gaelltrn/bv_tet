@@ -1,9 +1,11 @@
 # 07_profil_long.R -- Profil en long de la Têt, de la tête du chenal à la station de Serdinya
 #
 # Tracé : plus long chemin d'écoulement (script 06), qui suit le talweg du MNT.
-# Début : tête du chenal (accumulation > 0,5 km²), pour exclure le tronçon de versant.
+# Début : tête du chenal (accumulation > seuil_px, défini dans 00_parametres.R),
+#         pour exclure le tronçon de versant.
 # Altitudes : MNT D'ORIGINE, comme pour toute la morphométrie.
 
+source("scripts/00_parametres.R")
 library(terra)
 library(sf)
 library(ggplot2)
@@ -28,7 +30,7 @@ plot(chemin, col = "blue", lwd = 2, add = TRUE)
 
 # 1. Échantillonnage tous les 5 m ----------------------------------------
 
-pts <- st_cast(st_line_sample(chemin, density = 1/5), "POINT")
+pts <- st_cast(st_line_sample(chemin, density = 1 / taille_px), "POINT")
 alt <- extract(mnt, vect(pts))[, 2]
 
 # Le profil doit aller de l'amont vers l'aval
@@ -39,7 +41,7 @@ if (alt[1] < alt[length(alt)]) {
 
 # Début à la tête du chenal (même seuil que le réseau de la carte)
 acc_pts <- extract(acc, vect(pts))[, 2]
-debut <- which(acc_pts > 20000)[1]
+debut <- which(acc_pts > seuil_px)[1]
 pts <- pts[debut:length(pts)]
 alt <- alt[debut:length(alt)]
 
@@ -50,7 +52,7 @@ prof$distance_km <- prof$distance_m / 1000
 
 # 2. Pente du lit sur des tronçons de 500 m -------------------------------
 
-k <- 100   # 100 points × 5 m = 500 m
+k <- 500 / taille_px   # nombre de points pour 500 m
 pente_lit <- data.frame(
   distance_km = (head(prof$distance_m, -k) + diff(prof$distance_m, lag = k) / 2) / 1000,
   pente_pct   = -diff(prof$altitude, lag = k) / diff(prof$distance_m, lag = k) * 100
@@ -91,7 +93,7 @@ profil_long <- (g_prof / g_lit) +
   plot_annotation(
     tag_levels = "A",
     caption = paste0("Source : RGE ALTI 5 m (IGN). Tracé : plus long chemin d'écoulement (D8), ",
-                     "à partir de la tête du chenal (0,5 km² drainés)."),
+                     "à partir de la tête du chenal (", seuil_txt, " km² drainés)."),
     theme = theme(plot.caption = element_text(colour = "grey40", hjust = 0))
   )
 profil_long

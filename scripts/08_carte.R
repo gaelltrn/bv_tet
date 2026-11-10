@@ -1,4 +1,9 @@
 # 08_carte.R -- Carte du bassin de la Têt à la station de Serdinya
+#
+# Réseau hydrographique : accumulation > seuil_px (00_parametres.R),
+# hiérarchisé selon l'ordre de Strahler.
+
+source("scripts/00_parametres.R")
 library(terra)
 library(sf)
 library(ggplot2)
@@ -27,7 +32,7 @@ alt_bv <- mask(mnt_z, vect(bv))
 wbt_extract_streams(
   flow_accum = "data/derived/accumulation.tif",
   output     = "data/derived/reseau.tif",
-  threshold  = 20000            # 20 000 pixels × 25 m² = 0,5 km² drainés
+  threshold  = seuil_px
 )
 wbt_strahler_stream_order(
   d8_pntr = "data/derived/d8_pointer.tif",
@@ -42,6 +47,9 @@ wbt_raster_streams_to_vector(
 reseau <- st_read("data/derived/reseau.shp", quiet = TRUE)
 if (is.na(st_crs(reseau))) st_crs(reseau) <- 2154
 reseau <- st_intersection(reseau, st_geometry(bv))   # réseau du bassin seulement
+
+# Ordre de Strahler maximal, à reporter dans le README
+max(reseau$STRM_VAL)
 
 
 # 3. Carte ----------------------------------------------------------------
@@ -58,13 +66,13 @@ carte <- ggplot() +
   scale_linewidth(range = c(0.15, 1.2), name = "Ordre de\nStrahler") +
   geom_sf(data = exutoire, shape = 21, fill = "red", colour = "black", size = 3) +
   annotation_scale(location = "bl") +
-  annotation_north_arrow(location = "tr", style = north_arrow_minimal(),
+  annotation_north_arrow(location = "tl", style = north_arrow_minimal(),
                          height = unit(1, "cm"), width = unit(1, "cm")) +
   coord_sf(expand = FALSE, datum = st_crs(2154)) +
   labs(x = NULL, y = NULL,
        title = "Bassin de la Têt à la station de Serdinya",
-       caption = paste0("Source : RGE ALTI 5 m (IGN). Réseau simulé (D8, seuil 0,5 km²).\n",
-                        "Point rouge : station Y0424010.")) +
+       caption = paste0("Source : RGE ALTI 5 m (IGN). Réseau simulé (D8, seuil ", seuil_txt,
+                        " km², calé sur la BD TOPAGE).\nPoint rouge : station Y0424010.")) +
   theme_minimal(base_size = 11) +
   theme(plot.title = element_text(face = "bold"),
         plot.caption = element_text(colour = "grey40", hjust = 0))

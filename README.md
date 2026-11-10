@@ -15,26 +15,32 @@ Conception de la chaîne de traitement et analyse des résultats par Gaël Letou
   archive `RGEALTI_MNT_5M_..._D066_.
 - **BD TOPO, réseau hydrographique** (IGN).
 - **BD TOPAGE, bassins versants topographiques** (Sandre / OFB / IGN).
+- **BD TOPAGE, tronçons hydrographiques** (Sandre / OFB / IGN) : couche
+  `sa:TronconHydrographique_FXX_Topage2024` du flux WFS
+  `https://services.sandre.eaufrance.fr/geo/topage2024?`, extraite par
+  intersection avec le bassin, à placer dans `data/reference/troncons_topage.gpkg`.
 
 L'exutoire, placé manuellement, est fourni dans `data/digitalisation/`.
 
-## Exécution du script 
+## Exécution
 
-01_import_mnt.R        mosaïque, CRS, découpage avec marge
+Les paramètres communs (résolution, seuil du réseau) sont définis dans
+`scripts/00_parametres.R`. 
 
-02_correction_cuvettes.R   correction des dépressions
+| Script | Rôle |
+|---|---|
+| `00_parametres.R` | Paramètres communs à la chaîne |
+| `01_import_mnt.R` | Mosaïque du RGE ALTI, découpage sur l'enveloppe BD TOPAGE, agrégation à 5 m |
+| `02_correction_cuvettes.R` | Correction des dépressions du MNT par brèches |
+| `03_ecoulement.R` | Direction d'écoulement (D8) et accumulation |
+| `04_bassin.R` | Accrochage de l'exutoire à la station, délimitation du bassin |
+| `05_validation.R` | Comparaison avec la station et la BD TOPAGE |
+| `06_morphometrie.R` | Forme, relief, hypsométrie et pentes |
+| `07_profil_long.R` | Profil en long de la Têt et pente du lit |
+| `08_carte.R` | Carte du bassin et du réseau hydrographique simulé |
+| `09_calage_reseau.R` | Calage du seuil du réseau sur la BD TOPAGE (hors chaîne) |
 
-03_ecoulement.R        direction D8, accumulation
-
-04_bassin.R            accrochage de l'exutoire, délimitation, polygone
-
-05_validation.R        comparaison avec la BD TOPO et la BD TOPAGE
-
-06_morphometrie.R       forme, hypsométrie, pentes
-
-07_profil_long.R        tracage d'un profil en long.
-
-08_carte.R        réalisation d'une carte de synthèse et d'un ordre de Strahler 
+Le script 09 sert à choisir le seuil inscrit dans `00_parametres.R`.
 
 ## Résultats
 
@@ -109,8 +115,19 @@ d'altitude de 100 m. C : distribution des pentes.*
 ![Carte du bassin de la Têt](figures/carte_bassin_tet.png)
 
 Le réseau hydrographique est extrait de l'accumulation des écoulements,
-avec un seuil de 0,5 km² drainés, puis hiérarchisé selon l'ordre de
-Strahler. La Têt atteint l'ordre 5 à l'exutoire.
+puis hiérarchisé selon l'ordre de Strahler. La Têt atteint l'ordre 5
+à l'exutoire.
+
+**Choix du seuil.** Un pixel appartient au réseau s'il draine plus de
+0,75 km². Ce seuil a été déterminé à partir de la densité de drainage des tronçons
+BD TOPAGE, canaux et conduites exclus. La densité du réseau
+simulé (0,87 km/km²) s'écarte de 2,7 % de celle de la référence
+(0,85 km/km²). 
+
+![Calage du seuil](figures/calage_seuil.png)
+
+Le calage est peu sensible : entre 0,625 et 1 km², la densité reste à
+±10 % de la référence.
 
 ### Profil en long de la Têt
 
@@ -121,7 +138,8 @@ rappellent les étages de pente des versants. B : pente du lit, calculée
 sur des tronçons de 500 m.*
 
 Le profil suit le plus long chemin d'écoulement, à partir de la tête du
-chenal (0,5 km² drainés), avec les altitudes du MNT d'origine.
+chenal (0,75 km² drainés, comme pour le réseau), avec les altitudes du MNT
+d'origine.
 
 - **L'amont est en escalier.** Deux longs paliers, vers 2 000 m et vers
   1 700 m, alternent avec des ressauts. Le premier palier correspond en
@@ -141,19 +159,19 @@ la cartographie des formes glaciaires et la littérature régionale.
 ### Limites
 
 - Le périmètre dépend de la résolution : le contour brut, en marches
-  d'escalier, est 19 % plus long que le contour lissé. Le coefficient
+  d'escalier (forme carrée des pixels), est 19 % plus long que le contour lissé. Le coefficient
   de Gravelius est donc donné pour le contour lissé (tolérance de 5 m).
 - L'agrégation à 5 m par la moyenne arrondit légèrement les sommets,
-  et l'altitude maximale peut être un peu sous-estimée.
-- Le rapport de Melton (0,12) est calculé, mais il n'est pas interprété :
-  ses seuils ont été établis pour de petits bassins torrentiels, et ne
-  s'appliquent pas à un bassin de 415 km².
-  - Le réseau et l'ordre de Strahler dépendent du seuil d'accumulation
-  (0,5 km²) : un seuil plus bas densifie le réseau et peut augmenter
-  l'ordre maximal.
-- Les surfaces de lac apparaissent comme des paliers parfaitement plats
-  sur le profil en long : la pente nulle y traduit le plan d'eau, et non
-  la pente du fond.
+  et l'altitude maximale peut être légèrement sous-estimée.
+- Le rapport de Melton  est de 0,12. Ce dernier reste, en l'état, difficilement interprétable.
+  Ses seuils ont été établis pour de petits BV torrentiels, et semblent difficilement applicable à un bassin de 415 km². 
+  Dans notre cas, ce n'est pas parce que le bassin est grand que ce dernier ne peut pas présenter une partie
+  avec un fonctionnement en lave torentielle. C'est notamment le cas pour le premier troncon,
+  c'est-à-dire les gorges.
+  - - Le seuil du réseau reproduit la densité du réseau **cartographié** par
+  la BD TOPAGE, qui omet souvent les ravines éphémères de tête. Les têtes
+  de chenal réelles peuvent se situer plus haut, et le réseau réel être
+  plus dense. L'ordre de Strahler maximal dépend directement de ce seuil.
 
 ## Packages
 

@@ -18,7 +18,7 @@ Conception de la chaîne de traitement et analyse des résultats par Gaël Letou
 - **BD TOPAGE, tronçons hydrographiques** (Sandre / OFB / IGN) : couche
   `sa:TronconHydrographique_FXX_Topage2024` du flux WFS
   `https://services.sandre.eaufrance.fr/geo/topage2024?`, extraite par
-  intersection avec le bassin, à placer dans `data/reference/troncons_topage.gpkg`.
+  intersection avec le bassin, placé dans `data/reference/troncons_topage.gpkg`.
 
 L'exutoire, placé manuellement, est fourni dans `data/digitalisation/`.
 
@@ -120,14 +120,14 @@ puis hiérarchisé selon l'ordre de Strahler. La Têt atteint l'ordre 5
 
 **Choix du seuil.** Un pixel appartient au réseau s'il draine plus de
 0,75 km². Ce seuil a été déterminé à partir de la densité de drainage des tronçons
-BD TOPAGE, canaux et conduites exclus. La densité du réseau
+BD TOPAGE, en excluant les écoulements artificiels. La densité du réseau
 simulé (0,87 km/km²) s'écarte de 2,7 % de celle de la référence
 (0,85 km/km²). 
 
 ![Calage du seuil](figures/calage_seuil.png)
 
-Le calage est peu sensible : entre 0,625 et 1 km², la densité reste à
-±10 % de la référence.
+Pour un seuil compris 0,625 et 1 km², la densité reste à
+±10 % de la référence. 
 
 ### Profil en long de la Têt
 
@@ -141,19 +141,22 @@ Le profil suit le plus long chemin d'écoulement, à partir de la tête du
 chenal (0,75 km² drainés, comme pour le réseau), avec les altitudes du MNT
 d'origine.
 
-- **L'amont est en escalier.** Deux longs paliers, vers 2 000 m et vers
-  1 700 m, alternent avec des ressauts. Le premier palier correspond en
+- **L'amont est en escalier.** On constate une succesion de paliers et de ressauts. Le premier correspond en
   partie à la surface du lac des Bouillouses. Les deux paliers se situent
   dans l'étage des replats mis en évidence par la morphométrie.
 - **Une rupture de pente nette marque l'entrée dans les gorges**, à la
-  sortie de l'étage des replats : la pente du lit y remonte à environ 15 %.
+  sortie de l'étage des replats : la pente du lit y remonte à environ 15 %. 
+  Une morphogénèse plausible serait celle d'une gorge de raccordement sous-glaciaire associé à l'ancien glacier de la Têt, et dont l'érosion continue aujourd'hui.
 - **L'aval est concave et régulier**, avec une pente qui décroît jusqu'à
-  2-3 % à l'exutoire.
+  2-3 % à l'exutoire. Cette partie du réseau est plus stable et permet d'attester d'une certaine matûrité du réseau.
 
-Cette succession de paliers et de ressauts évoque le profil d'une vallée
-façonnée par les glaciers (ombilics et verrous), alors que la partie aval
-présente un profil de type fluvial. Cette hypothèse reste à confirmer par
-la cartographie des formes glaciaires et la littérature régionale.
+La succession de paliers et de ressauts évoque une morphogénèse de type glaciaire avec une sucession
+de verrous et d'ombilics et une gorge de raccordement sous-glaciaire. Quant à la partie aval, elle présente un profil de type fluvial. La trajectoire de cette partie du Têt 
+semble être le résultat de plusieurs dynamiques en interractions: la mise en place d'un réseau hydrographique post-glaciation, qui tend aujourd'hui vers un stade d'équilibre (comme le montre la partie la plus fluviale du profil). 
+
+Cela n'empêche guère la Têt d'être le théâtre d'importants épisodes de crue, lié aux épisodes cévenols et à la débacle nivale au printemps. 
+La présence d'écoulements artificialisés témoignent aussi de l'anthropisation du bassin-versant et des différents aménagements produits pour exploiter la ressource et limiter la vulnérabilité des installations humaines.
+L'aval de la Têt est en effet à fort enjeu, du fait de la présence de Perpignan, métropole de 300 000 habitants, et de hauts-lieux touristiques (St-Cyprien, Canet-en-Roussilon etc).
 
 
 ### Limites
@@ -166,9 +169,8 @@ la cartographie des formes glaciaires et la littérature régionale.
 - Le rapport de Melton  est de 0,12. Ce dernier reste, en l'état, difficilement interprétable.
   Ses seuils ont été établis pour de petits BV torrentiels, et semblent difficilement applicable à un bassin de 415 km². 
   Dans notre cas, ce n'est pas parce que le bassin est grand que ce dernier ne peut pas présenter une partie
-  avec un fonctionnement en lave torentielle. C'est notamment le cas pour le premier troncon,
-  c'est-à-dire les gorges.
-  - - Le seuil du réseau reproduit la densité du réseau **cartographié** par
+  avec un fonctionnement en lave torentielle. C'est notamment le cas pour le premier troncon, au niveau des sources de la Têt.
+- Le seuil du réseau reproduit la densité du réseau **cartographié** par
   la BD TOPAGE, qui omet souvent les ravines éphémères de tête. Les têtes
   de chenal réelles peuvent se situer plus haut, et le réseau réel être
   plus dense. L'ordre de Strahler maximal dépend directement de ce seuil.

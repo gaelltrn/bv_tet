@@ -51,7 +51,7 @@ Le bassin est délimité à partir du RGE ALTI (1m agrégé à 5 m), après corr
 des cuvettes, avec l'algorithme d'écoulement D8. L'exutoire est placé à la station hydrométrique
 **Y0424010 (La Têt à Serdinya [Joncet])**, disponible sur HydroPortail), puis accroché au chenal simulé.
 Une vérification a été réalisée grâce au logiciel SIG SAGA pour contrôler les délimitations du bassin.
-Les deux délimitations ne diffèrent que de 659 pixels (0,016 km², soit 0,004 % de la surface.
+Les deux délimitations ne diffèrent que de 659 pixels (0,016 km², soit 0,004 % de la surface).
 
 | Contrôle | Résultat |
 |---|---|

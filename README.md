@@ -7,12 +7,11 @@
 # Analyse hydrologique réalisée dans le cadre du cours "Hydrosystèmes de Montagne" du M1 GAED, parcours GEOÏDES
 
 Analyse de la forme, de l'hypsométrie et des pentes du bassin versant
-de la Têt (Pyrénées-Orientales), sur le troncon dont l'exutoire est situé à Serdinya. Projet réalisé avec R (terra, sf, whitebox).
+de la Têt (Pyrénées-Orientales), sur le troncon dont l'exutoire est situé à Serdinya. Projet réalisé avec R (terra, sf, whitebox) et SAGA GIS.
 Conception de la chaîne de traitement et analyse des résultats par Gaël Letourneur, scripts écrits avec l'IA Claude Code.
 ## Données utilisées
 
-- **RGE ALTI 1 m, département 66** (IGN, Licence Ouverte Etalab 2.0) :
-  archive `RGEALTI_MNT_5M_..._D066_.
+- **RGE ALTI 1 m, département 66** (IGN, Licence Ouverte Etalab 2.0).
 - **BD TOPO, réseau hydrographique** (IGN).
 - **BD TOPAGE, bassins versants topographiques** (Sandre / OFB / IGN).
 - **BD TOPAGE, tronçons hydrographiques** (Sandre / OFB / IGN) : couche
@@ -39,6 +38,8 @@ Les paramètres communs (résolution, seuil du réseau) sont définis dans
 | `07_profil_long.R` | Profil en long de la Têt et pente du lit |
 | `08_carte.R` | Carte du bassin et du réseau hydrographique simulé |
 | `09_calage_reseau.R` | Calage du seuil du réseau sur la BD TOPAGE (hors chaîne) |
+| `10_comparaison_saga.R` | Création d'un raster avec un pixel correspondant à l'exutoire, pour SAGA |
+| `11_comparaison_methodes.R` | Comparaison de toutes les méthodes de délimitation du BV |
 
 Le script 09 sert à choisir le seuil inscrit dans `00_parametres.R`.
 
@@ -49,10 +50,13 @@ Le script 09 sert à choisir le seuil inscrit dans `00_parametres.R`.
 Le bassin est délimité à partir du RGE ALTI (1m agrégé à 5 m), après correction
 des cuvettes, avec l'algorithme d'écoulement D8. L'exutoire est placé à la station hydrométrique
 **Y0424010 (La Têt à Serdinya [Joncet])**, disponible sur HydroPortail), puis accroché au chenal simulé.
+Une vérification a été réalisée grâce au logiciel SIG SAGA pour contrôler les délimitations du bassin.
+Les deux délimitations ne diffèrent que de 659 pixels (0,016 km², soit 0,004 % de la surface.
 
 | Contrôle | Résultat |
 |---|---|
-| Surface calculée | 414,8 km² |
+| Surface calculée via WhiteboxTools | 414,79 km² |
+| Surface calculée via SAGA GIS | 414,78 km² |
 | Surface de référence de la station | 424 km² (écart de −2,2 %) |
 | Distance d'accrochage de l'exutoire | 27 m |
 | Surface du bassin hors enveloppe BD TOPAGE | 2,0 km² |
@@ -125,18 +129,16 @@ simulé (0,87 km/km²) s'écarte de 2,7 % de celle de la référence
 (0,85 km/km²). 
 
 **Lignes de crête.** Les lignes de crête sont extraites par inversion du
-MNT : les altitudes sont multipliées par −1, si bien que les crêtes
-deviennent des talwegs et les sommets des cuvettes. Le relief inversé est
-ensuite traité exactement comme le relief réel pour le réseau
-hydrographique : correction des cuvettes par brèches, direction
-d'écoulement D8, accumulation, puis extraction avec le même seuil
-(0,75 km²). Le « réseau hydrographique » du relief inversé dessine ainsi
+MNT. Le relief inversé est
+ensuite traité de la même manière que pour déterminer le réseau hydrographique : 
+correction des cuvettes par brèches, direction d'écoulement D8, accumulation, 
+puis extraction avec le même seuil
+(0,75 km²). Cela donne ainsi
 les lignes de crête du relief réel, hiérarchisées selon l'ordre de
 Strahler. Seules les crêtes d'ordre 2 ou plus sont représentées, pour la
 lisibilité de la carte.
 
-Les crêtes extraites se raccordent au contour du bassin, qui est lui-même
-la ligne de crête principale : la ligne de partage des eaux.
+Les crêtes extraites se raccordent au contour du bassin et croisent ainsi la ligne de partage des eaux.
 
 ![Calage du seuil](figures/calage_seuil.png)
 
@@ -152,17 +154,16 @@ rappellent les étages de pente des versants. B : pente du lit, calculée
 sur des tronçons de 500 m.*
 
 Le profil suit le plus long chemin d'écoulement, à partir de la tête du
-chenal (0,75 km² drainés, comme pour le réseau), avec les altitudes du MNT
-d'origine.
+chenal.
 
 - **L'amont est en escalier.** On constate une succesion de paliers et de ressauts. Le premier correspond en
   partie à la surface du lac des Bouillouses. Les deux paliers se situent
   dans l'étage des replats mis en évidence par la morphométrie.
-- **Une rupture de pente nette marque l'entrée dans les gorges**, à la
+- **Puis une rupture de pente nette marque l'entrée dans les gorges**, à la
   sortie de l'étage des replats : la pente du lit y remonte à environ 15 %. 
   Une morphogénèse plausible serait celle d'une gorge de raccordement sous-glaciaire associé à l'ancien glacier de la Têt, et dont l'érosion continue aujourd'hui.
 - **L'aval est concave et régulier**, avec une pente qui décroît jusqu'à
-  2-3 % à l'exutoire. Cette partie du réseau est plus stable et permet d'attester d'une certaine matûrité du réseau.
+  2-3 % à l'exutoire. Cette partie du réseau est plus stable et matûre.
 
 La succession de paliers et de ressauts évoque une morphogénèse de type glaciaire avec une sucession
 de verrous et d'ombilics et une gorge de raccordement sous-glaciaire. Quant à la partie aval, elle présente un profil de type fluvial. La trajectoire de cette partie du Têt 
